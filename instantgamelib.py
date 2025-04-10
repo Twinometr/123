@@ -1,4 +1,3 @@
-# Файл: simple_game_engine.pyввф
 class GameObject:
     """Базовый класс для игровых объектов"""
     def __init__(self, x=0, y=0, char='#'):
@@ -29,7 +28,7 @@ class GameEngine:
         self._init_grid()     # Инициализация сетки
     
     def _init_grid(self):
-        """Создает пустую игровую сетку"""
+        """Создаю пустую игровую сетку"""
         self.grid = [['.' for _ in range(self.width)] for _ in range(self.height)]
     
     def add_object(self, obj):
@@ -41,11 +40,11 @@ class GameEngine:
             self.objects.remove(obj)
     
     def clear(self):
-        """Очищает игровую сетку"""
+        """Очищаю игровую сетку"""
         self._init_grid()
     
     def _get_input(self):
-        """Получает ввод с клавиатуры (только для Windows)"""
+        """Получаю ввод с клавиатуры (только для Windows)"""
         import msvcrt
         if msvcrt.kbhit():
             try:
@@ -55,7 +54,7 @@ class GameEngine:
         return None
     
     def update(self):
-        """Обновляет состояние игры"""
+        """Обновляю состояние игры"""
         key = self._get_input()
         if key:
             self.last_key = key
@@ -70,7 +69,7 @@ class GameEngine:
                 self.remove_object(obj)
     
     def render(self):
-        """Отрисовывает игровое поле"""
+        """Отрисовываю игровое поле"""
         self.clear()
         
         # Рисуем все объекты
@@ -80,7 +79,7 @@ class GameEngine:
         # Очищаем консоль (имитация)
         print("\n" * 30)
         
-        # Рисуем сетку
+        # Рисую сетку
         for row in self.grid:
             print(' '.join(row))
     
@@ -95,21 +94,18 @@ class GameEngine:
 # Пример использования библиотеки
 
 class Player(GameObject):
-    """Пример игрового персонажа"""
     def __init__(self, x, y):
-        super().__init__(x, y, '@')  # Символ '@' для игрока
+        super().__init__(x, y, '@')  
         self.speed = 1
     
     def update(self):
-        # Обрабатываем ввод
         if hasattr(self, 'game') and self.game.last_key:
             key = self.game.last_key
             if key == 'w': self.y -= self.speed
             elif key == 's': self.y += self.speed
             elif key == 'a': self.x -= self.speed
             elif key == 'd': self.x += self.speed
-            
-            # Проверяем границы
+            # Границы
             if self.x < 0: self.x = 0
             elif self.x >= self.game.width: self.x = self.game.width - 1
             if self.y < 0: self.y = 0
@@ -117,16 +113,14 @@ class Player(GameObject):
 
 
 class Wall(GameObject):
-    """Пример неподвижного объекта - стены"""
+    "Стена"
     def __init__(self, x, y):
-        super().__init__(x, y, '█')  # Символ стены
+        super().__init__(x, y, '█')
 
 
 if __name__ == "__main__":
-    # Создаем игру
     game = GameEngine(30, 15)
     
-    # Создаем игрока
     player = Player(5, 5)
     game.add_object(player)
     
